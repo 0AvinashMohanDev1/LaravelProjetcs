@@ -12,6 +12,9 @@ return new class extends Migration
     {
         Schema::create('batches', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 100);
+            $table->enum('type', ['full-time', 'part-time'])->default('full-time');
+            $table->enum('course', ['Android', 'Software','Analytics'])->default('Android');
             $table->timestamps();
         });
     }
