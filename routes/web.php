@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\BatchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,4 +28,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::resource('batches', BatchController::class);
+
+
+
+Route:: get("/home/{name?}",function($name='User'){
+    $data=compact('name');
+    return view('home')->with($data);
+});
 require __DIR__.'/auth.php';
