@@ -18,6 +18,9 @@
                     <x-nav-link :href="route('batches.index')" :active="request()->routeIs('batches')">
                         Batches
                     </x-nav-link>
+                    <x-nav-link :href="route('quizzes.index')" :active="request()->routeIs('quizzes')">
+                        Quizzes
+                    </x-nav-link>
                     
                 </div>
             </div>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Batch;
+use App\Models\Quiz;
+
 class BatchController extends Controller
 {
     /**
@@ -12,8 +14,10 @@ class BatchController extends Controller
     public function index()
     {
         // echo 'Batches';
-        $batches= Batch::all();
+        // $data= Batch::all();
+        $batches= Batch::paginate(4);
         // return $batches;
+        
        return view('batches.index',['batches' => $batches]);
     }
 
@@ -48,7 +52,9 @@ class BatchController extends Controller
     public function show(string $id)
     {
         $batch=Batch::find($id);
-        return view('batches.show',['batch'=>$batch]);
+        $quizzes=Quiz::whereIn("batch_id",[$id])->get();
+        echo $quizzes;
+        return view('batches.show',['batch'=>$batch,'quizzes'=>$quizzes]);
     }
 
     /**

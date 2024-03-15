@@ -3,6 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\QuestionController;
+use App\Http\Controllers\QuizController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\dumpController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,7 +33,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('batches', BatchController::class);
-
+Route::resource('questions',QuestionController::class);
+Route::resource('quizzes',QuizController::class);
+Route::resource('users',UserController::class);
 
 
 Route:: get("/home/{name?}",function($name='User'){
