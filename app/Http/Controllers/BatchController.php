@@ -11,11 +11,17 @@ class BatchController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $name = $request->input('name');
         // echo 'Batches';
         // $data= Batch::all();
-        $batches= Batch::paginate(4);
+        if($name==''){
+            $batches=Batch::withCount('quizzes')->paginate(5);
+        }else{
+            $batches= Batch::withCount('quizzes')->where('course','like','%'.$name.'%')->paginate(4);
+        }
+        
         // return $batches;
         
        return view('batches.index',['batches' => $batches]);
@@ -52,9 +58,10 @@ class BatchController extends Controller
     public function show(string $id)
     {
         $batch=Batch::find($id);
-        $quizzes=Quiz::whereIn("batch_id",[$id])->get();
-        echo $quizzes;
-        return view('batches.show',['batch'=>$batch,'quizzes'=>$quizzes]);
+        // $quizzes=Quiz::whereIn("batch_id",[$id])->get();
+        // echo $quizzes;
+        // return view('batches.show',['batch'=>$batch,'quizzes'=>$quizzes]);
+        return view('batches.show',['batch'=>$batch]);
     }
 
     /**

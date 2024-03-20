@@ -13,11 +13,20 @@ class QuizController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $quizzes= Quiz::all();
+        // $quizzes= Quiz::all();
         // echo $quizzes;
-        return view('quizzes.index',['quizzes'=>$quizzes]);
+        $title = $request->input('title');
+
+        // Check if title parameter is provided
+        if ($title !== null && $title !== '') {
+            $quizzes = Quiz::where('title', 'like', '%' . $title . '%')->get();
+        } else {
+            $quizzes = Quiz::all();
+        }
+
+        return view('quizzes.index', ['quizzes' => $quizzes]);
     }
 
     /**
@@ -27,7 +36,6 @@ class QuizController extends Controller
     {
         
         $batches= Batch::all();
-        // echo $batches;
         // return $batches;
        return view('quizzes.create',['batches' => $batches]);
     }
@@ -56,11 +64,13 @@ class QuizController extends Controller
      */
     public function show(string $id)
     {
-        $questions= Question::whereIn('quiz_id',[$id])->get();;
+        $questions= Question::whereIn('quiz_id',[$id])->get();
+        
         // echo $questions;
         $quiz=Quiz::find($id);
         // echo $quiz;
 
+        // return view('quizzes.show',['quiz'=>$quiz]);
         return view('quizzes.show',['questions' => $questions,'quiz'=>$quiz]);
     }
 

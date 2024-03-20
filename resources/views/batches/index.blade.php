@@ -9,11 +9,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
+                <form action="" method="GET">
+                    <input type="text" name="name" class="text-black-900" placeholder="find course">
+                </form>
                 <x-nav-link :href="route('batches.create')">
                     Create batches
                 </x-nav-link>
                 @foreach($batches as $batch)
-                    <p><a href="{{route('batches.show',['batch'=>$batch])}}">{{$batch->id}}</a>. {{$batch->name}} --{{$batch->course}} --{{$batch->created_at}} <a href="{{route('batches.edit',['batch'=>$batch])}}">Edit</a></p>
+                    <p><a href="{{route('batches.show',['batch'=>$batch])}}">{{$batch->id}}</a>. {{$batch->name}} --{{$batch->course}} --{{$batch->created_at}} <p>Total Quizzes: {{$batch->quizzes_count}}</p><a href="{{route('batches.edit',['batch'=>$batch])}}">Edit</a></p>
                 @endforeach
                 {{$batches->links()}}
                 

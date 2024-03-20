@@ -22,7 +22,7 @@
             <div class="p-6 text-gray-900 dark:text-gray-100">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <b>All Quizzes:-</b>
-                @foreach($quizzes as $quiz)
+                @foreach($batch->quizzes as $quiz)
                     
                     <p><a href="{{route('quizzes.show',['quiz'=>$quiz])}}">{{$quiz->id}}.</a> {{$quiz->title}}</p>
                 @endforeach

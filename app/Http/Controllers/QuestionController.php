@@ -5,6 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Quiz;
+use Illuminate\Support\Facades\Auth;
 
 class QuestionController extends Controller
 {
@@ -13,7 +14,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions= Question::all();
+        $questions= Question::paginate(3);
         return $questions;
     }
 
@@ -76,6 +77,27 @@ class QuestionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        echo $id;
+        $question=Question::find($id);
+        $question->delete();
+        echo Question::all();
+        // Assuming authentication is required for this action
+        // You can customize this according to your application's authorization logic
+        // if (!Auth::check()) {
+            // Redirect the user to login if not authenticated
+            // return redirect()->route('login');
+        // }
+
+        // Check if the authenticated user owns the quiz that the question belongs to
+        // if ($question->quiz->user_id !== Auth::user()->id) {
+            // Unauthorized access, redirect the user to a relevant page or return an error message
+            // return redirect()->route('home')->with('error', 'Unauthorized access');
+        // }
+
+        // Delete the question
+        // $question->delete();
+
+        // Redirect back with a success message
+        // return redirect()->back()->with('success', 'Question deleted successfully');
     }
 }

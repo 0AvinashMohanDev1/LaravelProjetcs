@@ -35,11 +35,19 @@
                     <h2>B: {{$question->option_b}}</h2>
                     <h2>C: {{$question->option_c}}</h2>
                     <h2>D: {{$question->option_d}}</h2>
+                    <form action="{{route('questions.destroy', ['question' => $question->id])}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                                    Delete
+                                </button>
+                            </form>
                     </div>
-
+                    
                 @endforeach
                 
             </div>
+            
             </div>
         </div>
     </div>

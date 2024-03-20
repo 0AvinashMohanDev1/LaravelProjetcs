@@ -9,11 +9,22 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
+                <form action="" method="GET">
+                    <!-- @csrf -->
+                    <!-- @method("PUT") -->
+                    <input type="text" name="title" class="text-black-900" placeholder="find quiz">
+                    <!-- <select name="name" id="">
+                    @foreach($quizzes as $quiz){
+                        <option value="{{$quiz->title}}">{{$quiz->title}}</option>
+                    }
+                    @endforeach
+                    </select> -->
+                </form>
                 <x-nav-link :href="route('quizzes.create')">
                     Create Quiz
                 </x-nav-link>
                 @foreach($quizzes as $quiz)
-                    <p><a href="{{route('quizzes.show',['quiz'=>$quiz])}}">{{$quiz->id}}</a>. <h1>{{$quiz->title}}</h1> <h2>From:    {{$quiz->starting}} </h2><h2>To: {{$quiz->ending}}</h2> <h2>Duration: {{$quiz->duration}} hours</h2> <b><a href="{{route('quizzes.edit',['quiz'=>$quiz])}}">Edit</a></b></p>
+                    <p><a href="{{route('quizzes.show',['quiz'=>$quiz])}}">{{$quiz->id}}</a>. <h1>Quiz: {{$quiz->title}}</h1> <h2>From:    {{$quiz->starting}} </h2><h2>To: {{$quiz->ending}}</h2> <h2>Duration: {{$quiz->duration}} hours</h2> <h2>Batch Name: {{$quiz->batch->name}}</h2><h2>Creater Name: {{$quiz->user->name}}</h2> <b><a href="{{route('quizzes.edit',['quiz'=>$quiz])}}">Edit</a></b></p>
                     
                 @endforeach
                 
