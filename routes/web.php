@@ -6,7 +6,7 @@ use App\Http\Controllers\BatchController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\dumpController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,7 +36,7 @@ Route::resource('batches', BatchController::class);
 Route::resource('questions',QuestionController::class);
 Route::resource('quizzes',QuizController::class);
 Route::resource('users',UserController::class);
-
+Route::get("dash",[DashboardController::class,"index"]);
 
 Route:: get("/home/{name?}",function($name='User'){
     $data=compact('name');

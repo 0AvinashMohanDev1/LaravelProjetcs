@@ -12,21 +12,45 @@ class BatchController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $name = $request->input('name');
-        // echo 'Batches';
-        // $data= Batch::all();
-        if($name==''){
-            $batches=Batch::withCount('quizzes')->paginate(5);
-        }else{
-            $batches= Batch::withCount('quizzes')->where('course','like','%'.$name.'%')->paginate(4);
+{
+    // Check if the 'count' parameter is present in the request
+    if ($request->has('count')) {
+        // Check the value of the 'count' parameter
+        $count = $request->input('count');
+        
+        // Based on the value of 'count', perform appropriate actions
+        if ($count === 'empty') {
+            // Handle the case when 'Empty' button was clicked
+            // For example, retrieve batches where quizzes count is 0
+            $batches = Batch::withcount('quizzes')->has('quizzes', '=', 0)->paginate(5);
+        } elseif ($count === 'non-empty') {
+            // Handle the case when 'Non-Empty' button was clicked
+            // For example, retrieve batches where quizzes count is greater than 0
+            $batches = Batch::withcount('quizzes')->has('quizzes', '>', 0)->paginate(5);
+        } elseif ($count === 'all') {
+            // Handle the case when 'Non-Empty' button was clicked
+            // For example, retrieve batches where quizzes count is greater than 0
+            $batches = Batch::withcount('quizzes')->paginate(5);
+        }  else {
+            // Handle the case when 'count' parameter has an unexpected value
+            // You can add appropriate error handling or default behavior here
+            // For example, redirect back with an error message
+            return redirect()->back()->with('error', 'Invalid count parameter value');
         }
-        
-        // return $batches;
-        
-       return view('batches.index',['batches' => $batches]);
+    } else {
+        // Handle the case when 'count' parameter is not present
+        // This could be the initial request or a request without the 'count' parameter
+        // For example, retrieve all batches with or without filtering by name
+        $name = $request->input('name');
+        if ($name === '') {
+            $batches = Batch::withCount('quizzes')->paginate(5);
+        } else {
+            $batches = Batch::withCount('quizzes')->where('course', 'like', '%' . $name . '%')->paginate(4);
+        }
     }
 
+    return view('batches.index', ['batches' => $batches]);
+}
     /**
      * Show the form for creating a new resource.
      */

@@ -15,6 +15,31 @@
                 <x-nav-link :href="route('batches.create')">
                     Create batches
                 </x-nav-link>
+                <!-- <x-primary-button class="ms-3">
+                    <a href="{{ route('batches.index', ['count' => 'empty']) }}">Empty</a>
+                </x-primary-button>
+
+                <x-primary-button class="ms-3">
+                    <a href="{{ route('batches.index', ['count' => 'non-empty']) }}">Non-Empty</a>
+                </x-primary-button> -->
+                <form action="{{ route('batches.index') }}" method="GET" class="inline">
+                    <x-primary-button type="submit" class="ms-3">
+                        <input type="hidden" name="count" value="all">
+                        All
+                    </x-primary-button>
+                </form>
+                <form action="{{ route('batches.index') }}" method="GET" class="inline ms-3">
+                    <x-primary-button type="submit" class="mt-3">
+                        <input type="hidden" name="count" value="empty">
+                        Empty
+                    </x-primary-button>
+                </form>
+                <form action="{{ route('batches.index') }}" method="GET" class="inline ms-3">
+                    <x-primary-button type="submit" class="mt-3">
+                        <input type="hidden" name="count" value="non-empty">
+                        Non-Empty
+                    </x-primary-button>
+                </form>
                 @foreach($batches as $batch)
                     <p><a href="{{route('batches.show',['batch'=>$batch])}}">{{$batch->id}}</a>. {{$batch->name}} --{{$batch->course}} --{{$batch->created_at}} <p>Total Quizzes: {{$batch->quizzes_count}}</p><a href="{{route('batches.edit',['batch'=>$batch])}}">Edit</a></p>
                 @endforeach
